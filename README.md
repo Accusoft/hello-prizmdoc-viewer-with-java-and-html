@@ -4,7 +4,7 @@ A minimal Java Spring web application which integrates PrizmDoc Viewer.
 
 ## Pre-Requisites
 
-- [JDK 8]
+- [JDK 11] or [JDK 8]
 - [Maven] 3.0+
 
 ## Setup
@@ -84,6 +84,7 @@ When you visit `http://localhost:8080`, you should see a viewer with an example 
 
 ![](screenshot.png)
 
-[JDK 8]: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+[JDK 11]: https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
+[JDK 8]: https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot
 [Maven]: https://maven.apache.org/index.html
 [PrizmDoc Cloud]: https://cloud.accusoft.com
