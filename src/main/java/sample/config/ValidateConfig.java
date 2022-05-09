@@ -31,7 +31,7 @@ public class ValidateConfig {
 
     private static final String DEFAULT_CLOUD_API_KEY = "YOUR_API_KEY";
     private static final String DEFAULT_PAS_BASE_URL = "https://api.accusoft.com/prizmdoc/";
-    private static final String DEFAULT_PAS_SECRET_KEY = null;
+    private static final String DEFAULT_PAS_SECRET_KEY = "YOUR_PAS_SECRET_KEY";
 
     @Value("${prizmdoc.cloud.apiKey:#{null}}")
     private String cloudApiKey;
@@ -62,14 +62,14 @@ public class ValidateConfig {
 
     private void ensurePasBaseUrlIsNotNull() {
         if (pasBaseUrl == null) {
-            exitWithMessage("Missing required application.properties configuration setting \"prizmdoc.pas.baseUrl\". See the README.md for more information.");
+            exitWithMessage("Missing required application.yml configuration setting \"prizmdoc.pas.baseUrl\". See the README.md for more information.");
         }
     }
 
     // The PAS base URL MUST end with a trailing slash in order for the embedded Zuul reverse proxy to work correctly.
     private void ensurePasBaseUrlEndsWithSlash() {
         if (!pasBaseUrl.endsWith("/")) {
-            exitWithMessage("The PAS base URL (\"prizmdoc.pas.baseUrl\" in application.properties) must end with a trailing slash.");
+            exitWithMessage("The PAS base URL (\"prizmdoc.pas.baseUrl\" in application.yml) must end with a trailing slash.");
         }
     }
 
@@ -120,17 +120,17 @@ public class ValidateConfig {
 
         if (statusCode == 401 /* Unauthorized */ && errorCode.equals("Unauthorized")) {
             if (cloudApiKey != null) {
-                exitWithMessage("Invalid API key. Make sure your \"prizmdoc.cloud.apiKey\" value in application.properties is correct. " +
+                exitWithMessage("Invalid API key. Make sure your \"prizmdoc.cloud.apiKey\" value in application.yml is correct. " +
                         "See the README.md for more information.");
             } else {
-                exitWithMessage("Missing API key. When using PrizmDoc Cloud, make sure you have provided a \"prizmdoc.cloud.apiKey\" value in application.properties. " +
+                exitWithMessage("Missing API key. When using PrizmDoc Cloud, make sure you have provided a \"prizmdoc.cloud.apiKey\" value in application.yml. " +
                         "Visit https://cloud.accusoft.com to sign up for an account and get an API key at no cost. " +
                         "See the README.md for more information.");
             }
         }
 
         if (statusCode != 200) {
-            exitWithMessage("Unexpected response when testing the connection to PAS. Are you sure that \"prizmdoc.pas.baseUrl\" in application.properties is correct? " +
+            exitWithMessage("Unexpected response when testing the connection to PAS. Are you sure that \"prizmdoc.pas.baseUrl\" in application.yml is correct? " +
                     "See the README.md for more information.");
         }
 
@@ -179,12 +179,12 @@ public class ValidateConfig {
 
         if (statusCode == 403 /* Forbidden */ && errorCode.equals("InvalidSecret")) {
             if (pasSecretKey != null) {
-                exitWithMessage("Invalid PAS secret. Make sure your \"prizmdoc.pas.secretKey\" value in application.properties matches the \"secretKey\" value in your PAS config file. " +
+                exitWithMessage("Invalid PAS secret. Make sure your \"prizmdoc.pas.secretKey\" value in application.yml matches the \"secretKey\" value in your PAS config file. " +
                         "See the README.md for more information.");
             } else {
-                exitWithMessage("You appear to be using a self-hosted PAS instance, but you have not provided a \"prizmdoc.pas.secretKey\" value in application.properties. " +
+                exitWithMessage("You appear to be using a self-hosted PAS instance, but you have not provided a \"prizmdoc.pas.secretKey\" value in application.yml. " +
                         "When self-hosting PAS, certain requests require an \"Accusoft-Secret\" header in order to be accepted. " +
-                        "To ensure this header is correctly sent, make sure to provide a \"prizmdoc.pas.secretKey\" configuration value in your application.properties file, " +
+                        "To ensure this header is correctly sent, make sure to provide a \"prizmdoc.pas.secretKey\" configuration value in your application.yml file, " +
                         "and make sure the value matches the \"secretKey\" value in your PAS config file. " +
                         "See the README.md for more information.");
             }

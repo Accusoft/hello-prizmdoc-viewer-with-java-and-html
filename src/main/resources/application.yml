@@ -1,0 +1,43 @@
+prizmdoc:
+  pas:
+    baseUrl: https://api.accusoft.com/prizmdoc/
+    # The secretKey property is only required for a Self-Hosted PAS configuration.
+    secretKey: YOUR_PAS_SECRET_KEY
+  cloud:
+    # The apiKey property is only required for a PrizmDoc Cloud configuration.
+    apiKey: YOUR_API_KEY
+
+spring:
+  application:
+    name: Hello PrizmDoc Viewer!
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+      # ===== PrizmDoc Cloud Configuration =====
+       - id: pas-proxy
+         uri: ${prizmdoc.pas.baseUrl}
+         predicates:
+           - Path=/pas-proxy/**
+         filters:
+           - AddRequestHeader=Acs-Api-Key, ${prizmdoc.cloud.apiKey}
+           # Spring Gateway removes paths from the uri property provided.
+           # When using a PrizmDoc Cloud configuration,
+           # you must replace the /prizmdoc prefix using the RewritePath filter.
+           - RewritePath=/pas-proxy/?(?<segment>.*), /prizmdoc/$\{segment}
+      # ===== Self-Hosted PAS Configuration =====
+      #  - id: pas-proxy
+      #    uri: ${prizmdoc.pas.baseUrl}
+      #    predicates:
+      #      - Path=/pas-proxy/**
+      #    filters:
+      #      - AddRequestHeader=Accusoft-Secret, ${prizmdoc.pas.secretKey}
+      #      - RewritePath=/pas-proxy/?(?<segment>.*), /$\{segment}
+ribbon:
+  eureka:
+    enabled: false
+
+logging:
+  level:
+    sample: INFO

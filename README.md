@@ -11,33 +11,40 @@ A minimal Java Spring web application which integrates PrizmDoc Viewer.
 
 ### Configure the Application to Connect to PAS
 
-Configure how to connect to PAS (PrizmDoc Application Services) by editing `src/main/resources/application.properties`.
+Configure how to connect to PAS (PrizmDoc Application Services) by editing `src/main/resources/application.yml`.
 
 #### Use PrizmDoc Cloud (Easiest)
 
 If you're just getting started, the easiest thing to do is to use [PrizmDoc Cloud]. We host PAS for you and all you need is your [PrizmDoc Cloud](https://cloud.accusoft.com) API key. If you don't have an API key, you can get one for free at https://cloud.accusoft.com.
 
-For [PrizmDoc Cloud], your `application.properties` will need to contain:
+For [PrizmDoc Cloud], your `application.yml` will need to contain:
 
-```properties
-prizmdoc.pas.baseUrl=https://api.accusoft.com/prizmdoc/
-prizmdoc.cloud.apiKey=YOUR_API_KEY
+```yml
+prizmdoc:
+  pas:
+    baseUrl: https://api.accusoft.com/prizmdoc/
+  cloud:
+    apiKey: YOUR_API_KEY
 ```
 
 Where `YOUR_API_KEY` is your [PrizmDoc Cloud](https://cloud.accusoft.com) API key.
 
 #### Host PAS Yourself (Advanced)
 
-If you are self-hosting your own PAS instance, your `application.properties` contents will be slightly different:
+If you are self-hosting your own PAS instance, your `application.yml` contents will be slightly different:
 
-```properties
-prizmdoc.pas.baseUrl=YOUR_PAS_BASE_URL
-prizmdoc.pas.secretKey=YOUR_PAS_SECRET_KEY
+```yml
+prizmdoc:
+  pas:
+    baseUrl: YOUR_PAS_BASE_URL
+    secretKey: YOUR_PAS_SECRET_KEY
 ```
 
 `prizmdoc.pas.baseUrl` should be the base URL for requests to your PAS instance (like `"http://localhost:3000/"`).
 
 `prizmdoc.pas.secretKey` must match the `secretKey` value specified in your PAS config file.
+
+You will need to uncomment the "Self-Hosted PAS Configuration" section, and comment out the "PrizmDoc Cloud Configuration" section to enable the correct proxy configuration.
 
 ## Running the Sample
 
