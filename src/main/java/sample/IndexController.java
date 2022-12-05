@@ -48,8 +48,8 @@ public class IndexController {
         HttpPost postRequest = new HttpPost(pasBaseUrl + "ViewingSession");
         JsonObject body = Json.createObjectBuilder()
             .add("source", Json.createObjectBuilder()
-                .add("type", "upload")
-                .add("displayName", DOCUMENT_FILENAME)
+                    .add("type", "upload")
+                    .add("displayName", DOCUMENT_FILENAME)
             ).build();
 
         if (cloudApiKey != null) {
