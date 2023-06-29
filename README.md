@@ -89,7 +89,7 @@ If you have configured your connection to PAS correctly, you should see output l
 
 When you visit `http://localhost:8080`, you should see a viewer with an example document, like this:
 
-![](screenshot.png)
+![screenshot](screenshot.png)
 
 [JDK 18]: https://adoptium.net/temurin/releases/?version=18
 [JDK 11]: https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
