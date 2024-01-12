@@ -46,6 +46,30 @@ prizmdoc:
 
 You will need to uncomment the "Self-Hosted PAS Configuration" section, and comment out the "PrizmDoc Cloud Configuration" section to enable the correct proxy configuration.
 
+#### Hybrid Viewing
+
+If you want to use client-side PDF Hybrid Viewing, enable the feature in `application.yml`, for example:
+
+```yml
+prizmdoc:
+  pas:
+    baseUrl: https://api.accusoft.com/prizmdoc/
+  cloud:
+    apiKey: YOUR_API_KEY
+  hybridViewing:
+    enabled: true
+```
+
+```yml
+prizmdoc:
+  pas:
+    baseUrl: YOUR_PAS_BASE_URL
+    secretKey: YOUR_PAS_SECRET_KEY
+  hybridViewing:
+    enabled: true
+```
+
+
 ## Running the Sample
 
 To start the application from the command line:

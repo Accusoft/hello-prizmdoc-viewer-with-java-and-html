@@ -6,6 +6,10 @@ prizmdoc:
   cloud:
     # The apiKey property is only required for a PrizmDoc Cloud configuration.
     apiKey: YOUR_API_KEY
+  hybridViewing:
+    # The following property enables or disables client-side Hybrid Viewing. 
+    # Enabling this feature will add "worker-src blob:" to the Content-Security-Policy.
+    enabled: false
 
 spring:
   application:

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.File;
@@ -40,17 +41,26 @@ public class IndexController {
     @Value("${prizmdoc.pas.secretKey:#{null}}")
     private String pasSecretKey;
 
+    @Value("${prizmdoc.hybridViewing.enabled:#{null}}")
+    private boolean enableHybridViewing;
+
     @GetMapping("/")
     public String renderPage(Model model) throws IOException, HttpException {
         HttpClient httpClient = HttpClientBuilder.create().build();
+
+        JsonArray allowedClientFileFormats = Json.createArrayBuilder().build();
+        if(enableHybridViewing){
+            allowedClientFileFormats = Json.createArrayBuilder().add("pdf").build();
+        }
 
         // 1. Create a new viewing session
         HttpPost postRequest = new HttpPost(pasBaseUrl + "ViewingSession");
         JsonObject body = Json.createObjectBuilder()
             .add("source", Json.createObjectBuilder()
-                    .add("type", "upload")
-                    .add("displayName", DOCUMENT_FILENAME)
-            ).build();
+                .add("type", "upload")
+                .add("displayName", DOCUMENT_FILENAME))
+            .add("allowedClientFileFormats", allowedClientFileFormats)
+            .build();
 
         if (cloudApiKey != null) {
             postRequest.addHeader("Acs-Api-Key", cloudApiKey);
